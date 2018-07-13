@@ -17,7 +17,7 @@ typedef struct thread_arg
 void* producer(void* _arg)
 {
     thread_arg* arg= (thread_arg*)_arg;
-    char buffer[1024];
+    char buffer[MAXMSGLEN];
     int x=0;
     while(x<MAXMSGCOUNT)
     {
