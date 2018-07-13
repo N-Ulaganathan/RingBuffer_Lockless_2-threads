@@ -37,13 +37,13 @@ void* consumer(void* _arg)
     while(x<MAXMSGCOUNT)
     {
         rb_read(arg->rb, buffer);
-        printf("CONSUMER THREAD (%d): %s --> t: %d  >> X:%d\n", arg->tid, buffer, arg->rb->tail, x);
+        printf("CONSUMER THREAD (%d): %s --> t: %d  >> X: %d\n", arg->tid, buffer, arg->rb->tail, x);
         x++;
     }
     return 0;
 }
 
-void simulate_single(ring_buffer* rb)
+void simulate(ring_buffer* rb)
 {
     pthread_t cons1, prod1;
     thread_arg *arg1, *arg2;
