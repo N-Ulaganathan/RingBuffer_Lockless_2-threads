@@ -21,7 +21,7 @@ void* producer(void* _arg)
     int x=0;
     while(x<MAXMSGCOUNT)
     {
-        sprintf(buffer, "%d-Text%d", arg->tid, x);
+        sprintf(buffer, "%d-Message%d", arg->tid, x);
         rb_write(arg->rb, buffer);
         printf("PRODUCER THREAD (%d): %s <-- h: %d  >> X: %d\n", arg->tid, buffer, arg->rb->head, x);
         x++;
