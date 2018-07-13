@@ -1,6 +1,8 @@
 #ifndef RINGBUFFER_H_INCLUDED
 #define RINGBUFFER_H_INCLUDED
 
+#define MAXMSGLEN 1024
+
 typedef struct message
 {
     char buffer[1024];
@@ -35,7 +37,7 @@ void rb_init(ring_buffer* rb, size_t max_size)
     rb->head = rb->tail = -1;
 }
 
-int rb_write(ring_buffer* rb, const char* buffer)
+void rb_write(ring_buffer* rb, const char* buffer)
 {
     rb->head = (rb->head+1) % rb->max_size;
     while(rb->messages[rb->head].read_flag==1)
@@ -44,10 +46,9 @@ int rb_write(ring_buffer* rb, const char* buffer)
     rb->messages[rb->head].read_flag=1;
     rb->size++;
     rb->sequence++;
-    return 0;
 }
 
-int rb_read(ring_buffer* rb, char* buffer)
+void rb_read(ring_buffer* rb, char* buffer)
 {
     rb->tail = (rb->tail+1) % rb->max_size;
     while(rb->messages[rb->tail].read_flag!=1)
@@ -55,7 +56,6 @@ int rb_read(ring_buffer* rb, char* buffer)
     sprintf(buffer, "%s", rb->messages[rb->tail].buffer);
     rb->messages[rb->tail].read_flag=2;
     rb->size--;
-    return 0;
 }
 
 #endif // RINGBUFFER_H_INCLUDED
