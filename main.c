@@ -22,10 +22,8 @@ void* producer(void* _arg)
     while(x<MAXMSGCOUNT)
     {
         sprintf(buffer, "%d-Text%d", arg->tid, x);
-        if(!rb_write(arg->rb, buffer))
-        {
-            printf("PRODUCER THREAD (%d): %s <-- h: %d  >> X: %d\n", arg->tid, buffer, arg->rb->head, x);
-        }
+        rb_write(arg->rb, buffer);
+        printf("PRODUCER THREAD (%d): %s <-- h: %d  >> X: %d\n", arg->tid, buffer, arg->rb->head, x);
         x++;
     }
     return 0;
@@ -38,10 +36,8 @@ void* consumer(void* _arg)
     int x=0;
     while(x<MAXMSGCOUNT)
     {
-        if(!rb_read(arg->rb, buffer))
-        {
-            printf("CONSUMER THREAD (%d): %s --> t: %d  >> X:%d\n", arg->tid, buffer, arg->rb->tail, x);
-        }
+        rb_read(arg->rb, buffer);
+        printf("CONSUMER THREAD (%d): %s --> t: %d  >> X:%d\n", arg->tid, buffer, arg->rb->tail, x);
         x++;
     }
     return 0;
