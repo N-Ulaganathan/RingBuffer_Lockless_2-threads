@@ -5,7 +5,7 @@
 
 typedef struct message
 {
-    char buffer[1024];
+    char buffer[MAXMSGLEN];
     int read_flag;
 } message;
 
